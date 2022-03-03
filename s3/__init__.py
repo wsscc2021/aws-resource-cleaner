@@ -19,7 +19,7 @@ def empty_buckets(buckets: list) -> bool:
         s3 = boto3.resource('s3')
         # delete all objects in each bucket
         for bucket in buckets:
-            s3.Bucket(bucket).objects.all().delete()
+            s3.Bucket(bucket).object_versions.delete()
         # return successfully code, if done delete to all resources
         return True
     except Exception as error:
