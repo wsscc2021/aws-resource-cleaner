@@ -32,7 +32,7 @@ def delete_policies(policy_arns: list) -> bool:
         # delete policies
         for policy_arn in policy_arns:
             client.delete_policy(PolicyArn=policy_arn)
-        # return Successfully code(True), if it's done that deleted all policies
+        # return successfully code, if done.
         return True
     except Exception as error:
         print(error)
@@ -59,7 +59,7 @@ def delete_open_id_connect_providers(open_id_connect_provider_arns: list) -> boo
         for open_id_connect_provider_arn in open_id_connect_provider_arns:
             client.delete_open_id_connect_provider(
                 OpenIDConnectProviderArn=open_id_connect_provider_arn)
-        # return Successfully code(True), if it's done that deleted all saml_provider_arn
+        # return successfully code, if done.
         return True
     except Exception as error:
         print(error)
@@ -85,7 +85,7 @@ def delete_saml_providers(saml_provider_arns: list) -> bool:
         # delete users
         for saml_provider_arn in saml_provider_arns:
             client.delete_saml_provider(SAMLProviderArn=saml_provider_arn)
-        # return Successfully code(True), if it's done that deleted all saml_provider_arn
+        # return successfully code, if done.
         return True
     except Exception as error:
         print(error)
@@ -93,15 +93,20 @@ def delete_saml_providers(saml_provider_arns: list) -> bool:
 
 def iam_cleaner() -> bool:
     try:
+        # list up all resources at aws_iam service
         non_attachment_custom_policy_arns = list_non_attachment_custom_policy_arns()
         open_id_connect_provider_arns = list_open_id_connect_provider_arns()
         saml_provider_arns = list_saml_provider_arns()
+
+        # output will deleted resources list
         print("==== IAM policies (Non-attachment) ====")
         pprint(non_attachment_custom_policy_arns)
         print("==== IAM OIDC providers ====")
         pprint(open_id_connect_provider_arns)
         print("==== IAM SAML providers ====")
         pprint(saml_provider_arns)
+
+        # approval and delete all resources
         while True:
             confirm = input("Are you sure you want to delete (y/n)? ")
             if confirm == "y":
