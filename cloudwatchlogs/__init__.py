@@ -20,7 +20,7 @@ def delete_cloudwatch_log_groups(cloudwatch_log_groups: list) -> bool:
         # delete all log groups
         for log_group in cloudwatch_log_groups:
             client.delete_log_group(logGroupName=log_group)
-        # return successfully code, if done delete to all resources
+        # return successfully code, if done
         return True
     except Exception as error:
         print(error)
