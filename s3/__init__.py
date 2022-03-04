@@ -20,7 +20,7 @@ def empty_buckets(buckets: list) -> bool:
         # delete all objects in each bucket
         for bucket in buckets:
             s3.Bucket(bucket).object_versions.delete()
-        # return successfully code, if done delete to all resources
+        # return successfully code, if done
         return True
     except Exception as error:
         print(error)
@@ -33,7 +33,7 @@ def delete_buckets(buckets: list) -> bool:
         # delete all buckets
         for bucket in buckets:
             client.delete_bucket(Bucket=bucket)
-        # return successfully code, if done delete to all resources
+        # return successfully code, if done
         return True
     except Exception as error:
         print(error)
@@ -41,9 +41,14 @@ def delete_buckets(buckets: list) -> bool:
 
 def s3_cleaner():
     try:
+        # list up all resources at aws s3 service
         buckets = list_buckets()
+
+        # output will deleted resources list
         print("==== S3 Buckets ====")
         pprint(buckets)
+
+        # approval and delete all resources
         while True:
             confirm = input("Are you sure you want to delete (y/n)? ")
             if confirm == "y":
@@ -60,5 +65,6 @@ def s3_cleaner():
         exit(1)
 
 if __name__ == '__main__':
-    s3_cleaner()
-    print("done!")
+    result = s3_cleaner()
+    if result:
+        print("done!")
