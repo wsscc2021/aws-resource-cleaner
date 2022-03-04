@@ -28,9 +28,14 @@ def delete_cloudwatch_log_groups(cloudwatch_log_groups: list) -> bool:
 
 def cloudwatch_logs_cleaner():
     try:
+        # list up all resources at rds service
         cloudwatch_log_groups = list_cloudwatch_log_groups()
+
+        # output will deleted resources list
         print("==== Cloudwatch Log Groups ====")
         pprint(cloudwatch_log_groups)
+
+        # approval and delete all resources
         while True:
             confirm = input("Are you sure you want to delete (y/n)? ")
             if confirm == "y":
