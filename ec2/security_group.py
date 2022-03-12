@@ -67,32 +67,15 @@ def delete_security_groups(security_group_ids: list) -> bool:
         print(error)
         exit(1)
 
-def security_group_cleaner() -> bool:
-    try:
-        # list up all resources at rds service
-        security_group_ids = list_security_group_ids()
+class SecurityGroupResources:
 
-        # output will deleted resources list
+    def __init__(self):
+        self.security_group_ids = list_security_group_ids()
+    
+    def print(self):
         print("==== EC2 Security Groups ====")
-        pprint(security_group_ids)
-
-        # approval and delete all resources
-        while True:
-            confirm = input("Are you sure you want to delete (y/n)? ")
-            if confirm == "y":
-                revoke_security_group_rules(security_group_ids)
-                delete_security_groups(security_group_ids)
-                return True
-            elif confirm == "n":
-                print("Canceled")
-                exit(1)
-            else:
-                print("Only input 'y' or 'n', Try again! ")
-    except Exception as error:
-        print(error)
-        exit(1)
-
-if __name__ == '__main__':
-    result = security_group_cleaner()
-    if result:
-        print("done!")
+        pprint(self.security_group_ids)
+    
+    def delete(self):
+        revoke_security_group_rules(self.security_group_ids)
+        delete_security_groups(self.security_group_ids)
