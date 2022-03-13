@@ -15,6 +15,7 @@
 
 from vpc import VpcResources
 from ec2.auto_scaling_group import AutoScalingGroupResources
+from rds import RDSResources
 from ec2.instance import EC2InstanceResources
 from elbv2.load_balancer import LoadBalancerResources
 from ec2.security_group import SecurityGroupResources
@@ -26,6 +27,7 @@ class AwsResources:
 
     def __init__(self):
         self.autoScalingGroupResources = AutoScalingGroupResources()
+        self.rdsResources              = RDSResources()
         self.ec2InstanceResources      = EC2InstanceResources()
         self.loadBalancerResources     = LoadBalancerResources()
         self.securityGroupResources    = SecurityGroupResources()
@@ -36,6 +38,7 @@ class AwsResources:
 
     def print(self):
         self.autoScalingGroupResources.print()
+        self.rdsResources.print()
         self.ec2InstanceResources.print()
         self.loadBalancerResources.print()
         self.securityGroupResources.print()
@@ -46,6 +49,7 @@ class AwsResources:
     
     def delete(self):
         self.autoScalingGroupResources.delete()
+        self.rdsResources.delete()
         self.ec2InstanceResources.delete()
         self.loadBalancerResources.delete()
         self.securityGroupResources.delete()

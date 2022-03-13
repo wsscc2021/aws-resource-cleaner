@@ -146,47 +146,30 @@ def delete_cluster_parameter_groups(cluster_parameter_groups: list) -> bool:
         print(error)
         exit(1)
 
-def rds_cleaner() -> bool:
-    try:
-        # list up all resources at rds service
-        db_instances = list_db_instances()
-        db_clusters = list_db_clusters()
-        subnet_groups = list_subnet_groups()
-        parameter_groups = list_parameter_groups()
-        cluster_parameter_groups = list_cluster_parameter_groups()
+class RDSResources:
 
-        # output will deleted resources list
+    def __init__(self):
+        self.db_instances = list_db_instances()
+        self.db_clusters = list_db_clusters()
+        self.subnet_groups = list_subnet_groups()
+        self.parameter_groups = list_parameter_groups()
+        self.cluster_parameter_groups = list_cluster_parameter_groups()
+
+    def print(self):
         print("==== RDS DB Instances ====")
-        pprint(db_instances)
+        pprint(self.db_instances)
         print("==== RDS DB Clusters ====")
-        pprint(db_clusters)
+        pprint(self.db_clusters)
         print("==== RDS Subnet Groups ====")
-        pprint(subnet_groups)
+        pprint(self.subnet_groups)
         print("==== RDS Parameter Groups ====")
-        pprint(parameter_groups)
+        pprint(self.parameter_groups)
         print("==== RDS Cluster Parameter Groups ====")
-        pprint(cluster_parameter_groups)
+        pprint(self.cluster_parameter_groups)
 
-        # approval and delete all resources
-        while True:
-            confirm = input("Are you sure you want to delete (y/n)? ")
-            if confirm == "y":
-                delete_db_instances(db_instances)
-                delete_db_clusters(db_clusters)
-                delete_subnet_groups(subnet_groups)
-                delete_parameter_groups(parameter_groups)
-                delete_cluster_parameter_groups(cluster_parameter_groups)
-                return True
-            elif confirm == "n":
-                print("Canceled")
-                exit(1)
-            else:
-                print("Only input 'y' or 'n', Try again! ")
-    except Exception as error:
-        print(error)
-        exit(1)
-
-if __name__ == '__main__':
-    result = rds_cleaner()
-    if result:
-        print("done!")
+    def delete(self):
+        delete_db_instances(self.db_instances)
+        delete_db_clusters(self.db_clusters)
+        delete_subnet_groups(self.subnet_groups)
+        delete_parameter_groups(self.parameter_groups)
+        delete_cluster_parameter_groups(self.cluster_parameter_groups)
