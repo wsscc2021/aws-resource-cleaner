@@ -169,7 +169,12 @@ class RDSResources:
 
     def delete(self):
         delete_db_instances(self.db_instances)
+        self.db_instances = []
         delete_db_clusters(self.db_clusters)
+        self.db_clusters = []
         delete_subnet_groups(self.subnet_groups)
+        self.subnet_groups = []
         delete_parameter_groups(self.parameter_groups)
+        self.parameter_groups = []
         delete_cluster_parameter_groups(self.cluster_parameter_groups)
+        self.cluster_parameter_groups = []
