@@ -50,5 +50,6 @@ class S3Resources:
         pprint(self.bucket_names)
     
     def delete(self):
+        empty_buckets(self.bucket_names)
         delete_buckets(self.bucket_names)
         self.bucket_names = []
