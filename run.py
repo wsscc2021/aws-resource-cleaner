@@ -20,6 +20,7 @@ from elbv2.load_balancer import LoadBalancerResources
 from ec2.security_group import SecurityGroupResources
 from ec2.eip import EIPResources
 from s3 import S3Resources
+from iam import IAMResources
 
 class AwsResources:
 
@@ -31,6 +32,7 @@ class AwsResources:
         self.vpcResources              = VpcResources()
         self.eipResources              = EIPResources()
         self.s3Resources               = S3Resources()
+        self.iamResources              = IAMResources()
 
     def print(self):
         self.autoScalingGroupResources.print()
@@ -40,6 +42,7 @@ class AwsResources:
         self.vpcResources.print()
         self.eipResources.print()
         self.s3Resources.print()
+        self.iamResources.print()
     
     def delete(self):
         self.autoScalingGroupResources.delete()
@@ -49,6 +52,7 @@ class AwsResources:
         self.vpcResources.delete()
         self.eipResources.delete()
         self.s3Resources.delete()
+        self.iamResources.delete()
 
 
 if __name__ == '__main__':

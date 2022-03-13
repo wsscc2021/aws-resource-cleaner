@@ -91,39 +91,26 @@ def delete_saml_providers(saml_provider_arns: list) -> bool:
         print(error)
         exit(1)
 
-def iam_cleaner() -> bool:
-    try:
-        # list up all resources at aws_iam service
-        non_attachment_custom_policy_arns = list_non_attachment_custom_policy_arns()
-        open_id_connect_provider_arns = list_open_id_connect_provider_arns()
-        saml_provider_arns = list_saml_provider_arns()
 
-        # output will deleted resources list
+class IAMResources:
+
+    def __init__(self):
+        self.non_attachment_custom_policy_arns = list_non_attachment_custom_policy_arns()
+        self.open_id_connect_provider_arns = list_open_id_connect_provider_arns()
+        self.saml_provider_arns = list_saml_provider_arns()
+
+    def print(self):
         print("==== IAM policies (Non-attachment) ====")
-        pprint(non_attachment_custom_policy_arns)
+        pprint(self.non_attachment_custom_policy_arns)
         print("==== IAM OIDC providers ====")
-        pprint(open_id_connect_provider_arns)
+        pprint(self.open_id_connect_provider_arns)
         print("==== IAM SAML providers ====")
-        pprint(saml_provider_arns)
+        pprint(self.saml_provider_arns)
 
-        # approval and delete all resources
-        while True:
-            confirm = input("Are you sure you want to delete (y/n)? ")
-            if confirm == "y":
-                delete_policies(non_attachment_custom_policy_arns)
-                delete_open_id_connect_providers(open_id_connect_provider_arns)
-                delete_saml_providers(saml_provider_arns)
-                return True
-            elif confirm == "n":
-                print("Canceled")
-                exit(1)
-            else:
-                print("Only input 'y' or 'n', Try again! ")
-    except Exception as error:
-        print(error)
-        exit(1)
-
-if __name__ == '__main__':
-    result = iam_cleaner()
-    if result:
-        print("done!")
+    def delete(self):
+        delete_policies(self.non_attachment_custom_policy_arns)
+        self.non_attachment_custom_policy_arns = []
+        delete_open_id_connect_providers(self.open_id_connect_provider_arns)
+        self.open_id_connect_provider_arns = []
+        delete_saml_providers(self.saml_provider_arns)
+        self.saml_provider_arns = []
