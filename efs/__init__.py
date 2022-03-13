@@ -48,31 +48,16 @@ def delete_file_systems(file_systems: list) -> bool:
         print(error)
         exit(1)
 
-def efs_cleaner() -> bool:
-    try:
-        # list up all resources at rds service
-        file_systems = list_file_systems()
 
-        # output will deleted resources list
+class EFSResources:
+
+    def __init__(self):
+        self.file_systems = list_file_systems()
+
+    def print(self):
         print("==== EFS File Systems ====")
-        pprint(file_systems)
+        pprint(self.file_systems)
 
-        # approval and delete all resources
-        while True:
-            confirm = input("Are you sure you want to delete (y/n)? ")
-            if confirm == "y":
-                delete_file_systems(file_systems)
-                return True
-            elif confirm == "n":
-                print("Canceled")
-                exit(1)
-            else:
-                print("Only input 'y' or 'n', Try again! ")
-    except Exception as error:
-        print(error)
-        exit(1)
-
-if __name__ == '__main__':
-    result = efs_cleaner()
-    if result:
-        print("done!")
+    def delete(self):
+        delete_file_systems(self.file_systems)
+        self.file_systems = []
