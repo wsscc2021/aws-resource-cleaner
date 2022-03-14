@@ -25,6 +25,7 @@ from s3 import S3Resources
 from iam import IAMResources
 from dynamodb import DynamoDBResources
 from cloudwatchlogs import CloudWatchLogsResources
+from cloudwatch import CloudwatchResources
 
 class AwsResources:
 
@@ -40,6 +41,7 @@ class AwsResources:
         self.s3Resources               = S3Resources()
         self.dynamodbResources         = DynamoDBResources()
         self.cloudWatchLogsResources   = CloudWatchLogsResources()
+        self.cloudwatchResources       = CloudwatchResources()
         self.iamResources              = IAMResources()
 
     def print(self):
@@ -54,6 +56,7 @@ class AwsResources:
         self.s3Resources.print()
         self.dynamodbResources.print()
         self.cloudWatchLogsResources.print()
+        self.cloudwatchResources.print()
         self.iamResources.print()
     
     def delete(self):
@@ -68,6 +71,7 @@ class AwsResources:
         self.s3Resources.delete()
         self.dynamodbResources.delete()
         self.cloudWatchLogsResources.delete()
+        self.cloudwatchResources.delete()
         self.iamResources.delete()
 
 
