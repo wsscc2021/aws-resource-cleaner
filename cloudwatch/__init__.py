@@ -8,8 +8,10 @@ def list_alarm_names() -> list:
         response = client.describe_alarms()
         return [
             alarm['AlarmName']
-            for alarms in response
-            for alarm in alarms
+            for alarm in response['CompositeAlarms']
+        ] + [
+            alarm['AlarmName']
+            for alarm in response['MetricAlarms']
         ]
     except Exception as error:
         print(error)
