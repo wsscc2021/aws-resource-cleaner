@@ -16,13 +16,12 @@ def list_load_balancer_arns() -> list:
 
 def delete_load_balancers(load_balancer_arns: list) -> bool:
     try:
-        pass
         client = boto3.client('elbv2')
         for load_balancer_arn in load_balancer_arns:
             client.delete_load_balancer(LoadBalancerArn=load_balancer_arn)
         waiter = client.get_waiter('load_balancers_deleted')
         waiter.wait(LoadBalancerArns=load_balancer_arns)
-        time.sleep(3)
+        time.sleep(10)
         return True
     except Exception as error:
         print(error)
@@ -57,7 +56,6 @@ class LoadBalancerResources:
         self.target_group_arns = list_target_group_arns()
     
     def print(self):
-        # output will deleted resources list
         print("==== Elastic Load Balancers ====")
         pprint(self.load_balancer_arns)
         print("==== Target Groups ====")
