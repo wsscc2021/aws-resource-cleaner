@@ -23,6 +23,7 @@ from ec2.security_group import SecurityGroupResources
 from ec2.eip import EIPResources
 from s3 import S3Resources
 from iam import IAMResources
+from dynamodb import DynamoDBResources
 
 class AwsResources:
 
@@ -36,6 +37,7 @@ class AwsResources:
         self.vpcResources              = VpcResources()
         self.eipResources              = EIPResources()
         self.s3Resources               = S3Resources()
+        self.dynamodbResources         = DynamoDBResources()
         self.iamResources              = IAMResources()
 
     def print(self):
@@ -48,6 +50,7 @@ class AwsResources:
         self.vpcResources.print()
         self.eipResources.print()
         self.s3Resources.print()
+        self.dynamodbResources.print()
         self.iamResources.print()
     
     def delete(self):
@@ -60,6 +63,7 @@ class AwsResources:
         self.vpcResources.delete()
         self.eipResources.delete()
         self.s3Resources.delete()
+        self.dynamodbResources.delete()
         self.iamResources.delete()
 
 
