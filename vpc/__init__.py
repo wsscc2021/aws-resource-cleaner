@@ -249,12 +249,15 @@ def delete_route_tables(vpc_ids: list) -> bool:
 
 class VpcResources:
 
-    def __init__(self):
+    @classmethod
+    async def init(cls):
+        self = cls()
         self.vpc_ids                    = list_vpc_ids()
         self.nat_gateway_ids            = list_nat_gateway_ids(self.vpc_ids) if self.vpc_ids else []
         self.vpc_endpoint_ids           = list_vpc_endpoint_ids(self.vpc_ids) if self.vpc_ids else []
         self.vpc_peering_connection_ids = list_vpc_peering_connection_ids(self.vpc_ids) if self.vpc_ids else []
         self.vpc_subnet_ids             = list_vpc_subnet_ids(self.vpc_ids) if self.vpc_ids else []
+        return self
     
     def print(self):
         # output will deleted resources list

@@ -13,6 +13,8 @@
 # ↓
 # s3, iam, cloudwatchlogs
 
+import asyncio
+
 from vpc import VpcResources
 from ec2.auto_scaling_group import AutoScalingGroupResources
 from rds import RDSResources
@@ -26,23 +28,41 @@ from iam import IAMResources
 from dynamodb import DynamoDBResources
 from cloudwatchlogs import CloudWatchLogsResources
 from cloudwatch import CloudwatchResources
+import vpc
 
 class AwsResources:
 
-    def __init__(self):
-        self.autoScalingGroupResources = AutoScalingGroupResources()
-        self.rdsResources              = RDSResources()
-        self.efsResources              = EFSResources()
-        self.ec2InstanceResources      = EC2InstanceResources()
-        self.loadBalancerResources     = LoadBalancerResources()
-        self.securityGroupResources    = SecurityGroupResources()
-        self.vpcResources              = VpcResources()
-        self.eipResources              = EIPResources()
-        self.s3Resources               = S3Resources()
-        self.dynamodbResources         = DynamoDBResources()
-        self.cloudWatchLogsResources   = CloudWatchLogsResources()
-        self.cloudwatchResources       = CloudwatchResources()
-        self.iamResources              = IAMResources()
+    @classmethod
+    async def init(cls):
+        self = cls()
+        autoScalingGroupResources = AutoScalingGroupResources.init()
+        rdsResources              = RDSResources.init()
+        efsResources              = EFSResources.init()
+        ec2InstanceResources      = EC2InstanceResources.init()
+        loadBalancerResources     = LoadBalancerResources.init()
+        securityGroupResources    = SecurityGroupResources.init()
+        vpcResources              = VpcResources.init()
+        eipResources              = EIPResources.init()
+        s3Resources               = S3Resources.init()
+        dynamodbResources         = DynamoDBResources.init()
+        cloudWatchLogsResources   = CloudWatchLogsResources.init()
+        cloudwatchResources       = CloudwatchResources.init()
+        iamResources              = IAMResources.init()
+
+        self.autoScalingGroupResources = await autoScalingGroupResources
+        self.rdsResources              = await rdsResources
+        self.efsResources              = await efsResources
+        self.ec2InstanceResources      = await ec2InstanceResources
+        self.loadBalancerResources     = await loadBalancerResources
+        self.securityGroupResources    = await securityGroupResources
+        self.vpcResources              = await vpcResources
+        self.eipResources              = await eipResources
+        self.s3Resources               = await s3Resources
+        self.dynamodbResources         = await dynamodbResources
+        self.cloudWatchLogsResources   = await cloudWatchLogsResources
+        self.cloudwatchResources       = await cloudwatchResources
+        self.iamResources              = await iamResources
+        return self
 
     def print(self):
         self.autoScalingGroupResources.print()
@@ -75,9 +95,9 @@ class AwsResources:
         self.iamResources.delete()
 
 
-if __name__ == '__main__':
+async def main():
     try:
-        awsResources = AwsResources()
+        awsResources = await AwsResources.init()
         awsResources.print()
         while True:
             confirm = input("Are you sure you want to delete (y/n)? ")
@@ -93,3 +113,6 @@ if __name__ == '__main__':
     except Exception as error:
         print(error)
         exit(1)
+
+if __name__ == '__main__':
+    asyncio.run(main())

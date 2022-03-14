@@ -68,9 +68,12 @@ def delete_launch_templates(launch_template_names: list) -> bool:
 
 class AutoScalingGroupResources:
 
-    def __init__(self):
+    @classmethod
+    async def init(cls):
+        self = cls()
         self.auto_scaling_group_names = list_auto_scaling_group_names()
         self.launch_template_names    = list_launch_template_names()
+        return self
 
     def print(self):
         # print list of resources.

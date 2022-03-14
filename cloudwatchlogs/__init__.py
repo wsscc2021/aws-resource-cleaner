@@ -28,8 +28,11 @@ def delete_cloudwatch_log_groups(cloudwatch_log_groups: list) -> bool:
 
 class CloudWatchLogsResources:
 
-    def __init__(self):
+    @classmethod
+    async def init(cls):
+        self = cls()
         self.cloudwatch_log_group_names = list_cloudwatch_log_group_names()
+        return self
     
     def print(self):
         print("==== Cloudwatch Log Groups ====")

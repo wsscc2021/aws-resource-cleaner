@@ -51,9 +51,12 @@ def delete_target_groups(target_group_arns: list) -> bool:
 
 class LoadBalancerResources:
 
-    def __init__(self):
+    @classmethod
+    async def init(cls):
+        self = cls()
         self.load_balancer_arns = list_load_balancer_arns()
         self.target_group_arns = list_target_group_arns()
+        return self
     
     def print(self):
         print("==== Elastic Load Balancers ====")

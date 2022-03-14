@@ -22,8 +22,11 @@ def delete_tables(table_names: list) -> bool:
 
 class DynamoDBResources:
 
-    def __init__(self):
+    @classmethod
+    async def init(cls):
+        self = cls()
         self.table_names = list_table_names()
+        return self
     
     def print(self):
         print("==== DynamoDB Tables ====")

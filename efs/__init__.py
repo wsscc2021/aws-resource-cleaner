@@ -51,8 +51,11 @@ def delete_file_systems(file_systems: list) -> bool:
 
 class EFSResources:
 
-    def __init__(self):
+    @classmethod
+    async def init(cls):
+        self = cls()
         self.file_systems = list_file_systems()
+        return self
 
     def print(self):
         print("==== EFS File Systems ====")

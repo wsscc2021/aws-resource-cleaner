@@ -48,8 +48,11 @@ def delete_buckets(bucket_names: list) -> bool:
 
 class S3Resources:
 
-    def __init__(self):
+    @classmethod
+    async def init(cls):
+        self = cls()
         self.bucket_names = list_bucket_names()
+        return self
 
     def print(self):
         # output will deleted resources list

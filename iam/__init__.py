@@ -94,10 +94,13 @@ def delete_saml_providers(saml_provider_arns: list) -> bool:
 
 class IAMResources:
 
-    def __init__(self):
+    @classmethod
+    async def init(cls):
+        self = cls()
         self.non_attachment_custom_policy_arns = list_non_attachment_custom_policy_arns()
         self.open_id_connect_provider_arns = list_open_id_connect_provider_arns()
         self.saml_provider_arns = list_saml_provider_arns()
+        return self
 
     def print(self):
         print("==== IAM policies (Non-attachment) ====")

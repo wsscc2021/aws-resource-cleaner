@@ -27,8 +27,11 @@ def delete_alarms(alarm_names: list) -> bool:
 
 class CloudwatchResources:
     
-    def __init__(self):
+    @classmethod
+    async def init(cls):
+        self = cls()
         self.alarm_names = list_alarm_names()
+        return self
     
     def print(self):
         print("==== Cloudwatch Alarms ====")

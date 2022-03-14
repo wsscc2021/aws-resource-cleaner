@@ -26,8 +26,11 @@ def release_eip_addresses(eip_allocation_ids: list) -> bool:
 
 class EIPResources:
 
-    def __init__(self):
+    @classmethod
+    async def init(cls):
+        self = cls()
         self.eip_allocation_ids = list_idle_eip_allocation_ids()
+        return self
 
     def print(self):
         print("==== Idle EIP Addresses ====")

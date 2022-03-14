@@ -40,8 +40,11 @@ def terminate_instances(instance_ids: list) -> bool:
 
 class EC2InstanceResources:
 
-    def __init__(self):
+    @classmethod
+    async def init(cls):
+        self = cls()
         self.instance_ids = list_instance_ids()
+        return self
     
     def print(self):
         print("==== EC2 Instances ====")

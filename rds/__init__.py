@@ -148,12 +148,15 @@ def delete_cluster_parameter_groups(cluster_parameter_groups: list) -> bool:
 
 class RDSResources:
 
-    def __init__(self):
+    @classmethod
+    async def init(cls):
+        self = cls()
         self.db_instances = list_db_instances()
         self.db_clusters = list_db_clusters()
         self.subnet_groups = list_subnet_groups()
         self.parameter_groups = list_parameter_groups()
         self.cluster_parameter_groups = list_cluster_parameter_groups()
+        return self
 
     def print(self):
         print("==== RDS DB Instances ====")

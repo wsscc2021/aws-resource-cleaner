@@ -69,8 +69,11 @@ def delete_security_groups(security_group_ids: list) -> bool:
 
 class SecurityGroupResources:
 
-    def __init__(self):
+    @classmethod
+    async def init(cls):
+        self = cls()
         self.security_group_ids = list_security_group_ids()
+        return self
     
     def print(self):
         print("==== EC2 Security Groups ====")
