@@ -24,6 +24,7 @@ from ec2.eip import EIPResources
 from s3 import S3Resources
 from iam import IAMResources
 from dynamodb import DynamoDBResources
+from cloudwatchlogs import CloudWatchLogsResources
 
 class AwsResources:
 
@@ -38,6 +39,7 @@ class AwsResources:
         self.eipResources              = EIPResources()
         self.s3Resources               = S3Resources()
         self.dynamodbResources         = DynamoDBResources()
+        self.cloudWatchLogsResources   = CloudWatchLogsResources()
         self.iamResources              = IAMResources()
 
     def print(self):
@@ -51,6 +53,7 @@ class AwsResources:
         self.eipResources.print()
         self.s3Resources.print()
         self.dynamodbResources.print()
+        self.cloudWatchLogsResources.print()
         self.iamResources.print()
     
     def delete(self):
@@ -64,6 +67,7 @@ class AwsResources:
         self.eipResources.delete()
         self.s3Resources.delete()
         self.dynamodbResources.delete()
+        self.cloudWatchLogsResources.delete()
         self.iamResources.delete()
 
 
