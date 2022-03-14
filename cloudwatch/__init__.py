@@ -1,4 +1,5 @@
 from pprint import pprint
+from signal import alarm
 import boto3
 
 def list_alarm_names() -> list:
@@ -7,10 +8,8 @@ def list_alarm_names() -> list:
         response = client.describe_alarms()
         return [
             alarm['AlarmName']
-            for alarm in response['CompositeAlarms']
-        ] + [
-            alarm['AlarmName']
-            for alarm in response['MetricAlarms']
+            for alarms in response
+            for alarm in alarms
         ]
     except Exception as error:
         print(error)
@@ -38,5 +37,6 @@ class CloudwatchResources:
         pprint(self.alarm_names)
     
     def delete(self):
-        delete_alarms(self.alarm_names)
-        self.alarm_names = []
+        if self.alarm_names:
+            delete_alarms(self.alarm_names)
+            self.alarm_names = []

@@ -33,5 +33,6 @@ class DynamoDBResources:
         pprint(self.table_names)
     
     def delete(self):
-        delete_tables(self.table_names)
-        self.table_names = []
+        if self.table_names:
+            delete_tables(self.table_names)
+            self.table_names = []

@@ -273,22 +273,23 @@ class VpcResources:
         pprint(self.vpc_subnet_ids)
 
     def delete(self):
+        # delete nat gateways
         if self.nat_gateway_ids:
             delete_nat_gateways(self.nat_gateway_ids)
             self.nat_gateway_ids = []
-
+        # delete vpc endpoint
         if self.vpc_endpoint_ids:
             delete_vpc_endpoints(self.vpc_endpoint_ids)
             self.vpc_endpoint_ids = []
-
+        # delete vpc peering
         if self.vpc_peering_connection_ids:
             delete_vpc_peering_connections(self.vpc_peering_connection_ids)
             self.vpc_peering_connection_ids = []
-
+        # delete subnets
         if self.vpc_subnet_ids:
             delete_vpc_subnets(self.vpc_subnet_ids)
             self.vpc_subnet_ids = []
-
+        # delete igw -> route-table -> vpc
         if self.vpc_ids:
             delete_internet_gateways(self.vpc_ids)
             delete_route_tables(self.vpc_ids)

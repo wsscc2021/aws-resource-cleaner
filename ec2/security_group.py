@@ -80,5 +80,7 @@ class SecurityGroupResources:
         pprint(self.security_group_ids)
     
     def delete(self):
-        revoke_security_group_rules(self.security_group_ids)
-        delete_security_groups(self.security_group_ids)
+        if self.security_group_ids:
+            revoke_security_group_rules(self.security_group_ids)
+            delete_security_groups(self.security_group_ids)
+            self.security_group_ids = []

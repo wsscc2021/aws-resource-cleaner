@@ -28,7 +28,6 @@ from iam import IAMResources
 from dynamodb import DynamoDBResources
 from cloudwatchlogs import CloudWatchLogsResources
 from cloudwatch import CloudwatchResources
-import vpc
 
 class AwsResources:
 

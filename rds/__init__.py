@@ -171,13 +171,23 @@ class RDSResources:
         pprint(self.cluster_parameter_groups)
 
     def delete(self):
-        delete_db_instances(self.db_instances)
-        self.db_instances = []
-        delete_db_clusters(self.db_clusters)
-        self.db_clusters = []
-        delete_subnet_groups(self.subnet_groups)
-        self.subnet_groups = []
-        delete_parameter_groups(self.parameter_groups)
-        self.parameter_groups = []
-        delete_cluster_parameter_groups(self.cluster_parameter_groups)
-        self.cluster_parameter_groups = []
+        # delete db instances
+        if self.db_instances:
+            delete_db_instances(self.db_instances)
+            self.db_instances = []
+        # delete db clusters
+        if self.db_clusters:
+            delete_db_clusters(self.db_clusters)
+            self.db_clusters = []
+        # delete subnet groups
+        if self.subnet_groups:
+            delete_subnet_groups(self.subnet_groups)
+            self.subnet_groups = []
+        # delete parameter groups
+        if self.parameter_groups:
+            delete_parameter_groups(self.parameter_groups)
+            self.parameter_groups = []
+        # delete cluster parameter groups
+        if self.cluster_parameter_groups:
+            delete_cluster_parameter_groups(self.cluster_parameter_groups)
+            self.cluster_parameter_groups = []

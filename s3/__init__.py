@@ -1,6 +1,5 @@
 from pprint import pprint
 import boto3
-import botocore
 
 def list_bucket_names() -> list:
     try:
@@ -55,11 +54,11 @@ class S3Resources:
         return self
 
     def print(self):
-        # output will deleted resources list
         print("==== S3 Buckets ====")
         pprint(self.bucket_names)
     
     def delete(self):
-        empty_buckets(self.bucket_names)
-        delete_buckets(self.bucket_names)
-        self.bucket_names = []
+        if self.bucket_names:
+            empty_buckets(self.bucket_names)
+            delete_buckets(self.bucket_names)
+            self.bucket_names = []

@@ -111,9 +111,15 @@ class IAMResources:
         pprint(self.saml_provider_arns)
 
     def delete(self):
-        delete_policies(self.non_attachment_custom_policy_arns)
-        self.non_attachment_custom_policy_arns = []
-        delete_open_id_connect_providers(self.open_id_connect_provider_arns)
-        self.open_id_connect_provider_arns = []
-        delete_saml_providers(self.saml_provider_arns)
-        self.saml_provider_arns = []
+        # delete custom policy
+        if self.non_attachment_custom_policy_arns:
+            delete_policies(self.non_attachment_custom_policy_arns)
+            self.non_attachment_custom_policy_arns = []
+        # delete oidc provider
+        if self.open_id_connect_provider_arns:
+            delete_open_id_connect_providers(self.open_id_connect_provider_arns)
+            self.open_id_connect_provider_arns = []
+        # delete saml provider
+        if self.saml_provider_arns:
+            delete_saml_providers(self.saml_provider_arns)
+            self.saml_provider_arns = []

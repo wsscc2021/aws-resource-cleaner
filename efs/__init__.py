@@ -62,5 +62,6 @@ class EFSResources:
         pprint(self.file_systems)
 
     def delete(self):
-        delete_file_systems(self.file_systems)
-        self.file_systems = []
+        if self.file_systems:
+            delete_file_systems(self.file_systems)
+            self.file_systems = []

@@ -39,5 +39,6 @@ class CloudWatchLogsResources:
         pprint(self.cloudwatch_log_group_names)
 
     def delete(self):
-        delete_cloudwatch_log_groups(self.cloudwatch_log_group_names)
-        self.cloudwatch_log_group_names = []
+        if self.cloudwatch_log_group_names:
+            delete_cloudwatch_log_groups(self.cloudwatch_log_group_names)
+            self.cloudwatch_log_group_names = []

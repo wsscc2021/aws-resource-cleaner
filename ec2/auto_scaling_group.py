@@ -87,5 +87,7 @@ class AutoScalingGroupResources:
         if self.auto_scaling_group_names:
             empty_auto_scaling_groups(self.auto_scaling_group_names)
             delete_auto_scaling_groups(self.auto_scaling_group_names)
+            self.auto_scaling_group_names = []
         if self.launch_template_names:
             delete_launch_templates(self.launch_template_names)
+            self.launch_template_naems = []
