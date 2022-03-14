@@ -1,5 +1,6 @@
 from pprint import pprint
 import boto3
+import botocore
 
 def list_bucket_names() -> list:
     try:
@@ -19,7 +20,10 @@ def empty_buckets(buckets: list) -> bool:
         s3 = boto3.resource('s3')
         # delete all objects in each bucket
         for bucket in buckets:
-            s3.Bucket(bucket).object_versions.delete()
+            try:
+                s3.Bucket(bucket).object_versions.delete()
+            except boto3.client('s3').exceptions.NoSuchBucket:
+                continue
         # return successfully code, if done
         return True
     except Exception as error:
@@ -32,7 +36,10 @@ def delete_buckets(bucket_names: list) -> bool:
         client = boto3.client('s3')
         # delete all buckets
         for bucket in bucket_names:
-            client.delete_bucket(Bucket=bucket)
+            try:
+                client.delete_bucket(Bucket=bucket)
+            except client.exceptions.NoSuchBucket:
+                continue
         # return successfully code, if done
         return True
     except Exception as error:
