@@ -25,12 +25,34 @@ def list_non_attachment_custom_policy_arns() -> list:
         print(error)
         exit(1)
 
+def list_policy_no_default_versions(policy_arn: str) -> list:
+    try:
+        # init boto3 client
+        client = boto3.client('iam')
+        # list policy versions
+        response = client.list_policy_versions(PolicyArn=policy_arn)
+        # return not default versions
+        return [ 
+            version['VersionId']
+            for version in response['Versions']
+            if not version['IsDefaultVersion']
+        ]
+    except Exception as error:
+        print(error)
+        exit(1)
+
 def delete_policies(policy_arns: list) -> bool:
     try:
         # init boto3 client
         client = boto3.client('iam')
         # delete policies
         for policy_arn in policy_arns:
+            # delete policy no default versions befoe delete policy
+            for version_id in list_policy_no_default_versions(policy_arn):
+                client.delete_policy_version(
+                    PolicyArn=policy_arn,
+                    VersionId=version_id)
+            # delete policy
             client.delete_policy(PolicyArn=policy_arn)
         # return successfully code, if done.
         return True
