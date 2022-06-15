@@ -1,5 +1,4 @@
 from pprint import pprint
-from signal import alarm
 import boto3
 
 def list_alarm_names() -> list:
